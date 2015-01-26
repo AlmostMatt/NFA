@@ -1,0 +1,150 @@
+Bitmap ground texture.
+
+ draw particles like splatters to the ground texture
+
+
+-----------------------------------------------
+- Collisions/Physics                            -
+-----------------------------------------------
+
+Circle hitboxes wherever possible. maybe some polygons for ground based areas.
+
+every entity has a collision type/layer
+and a list of layers that it can hit.
+
+
+ex: p1 type p1, p2 type p2
+p1shot collides p2, p2shot collides p1
+
+collision as a "is_hitting", no physical reaction (bounce)
+for every physics object, update velocity in update function. determine expected new position.
+
+for every pair of possible colliding objects, consider relative displacement vector, and minkowski sum of circle hitboxes to check for collision along the travel interval
+
+or, if stuff moves slowly, just check "is overlapping"
+
+-----------------------------------------------
+- AI                                                    -
+-----------------------------------------------
+
+Preferred distance
+min dist
+max dist
+
+Heuristic weights (multiple of weight, time required, and effectiveness)
+Lateral movement, 
+Too close
+Too far
+Damage dealt
+Damage taken
+Ability Cast
+Projectile dodged
+Area dodged
+(Negative weight for dash => only use it if it would avoid projectiles / save health)
+
+
+Inputs
+health, cooldowns, resources, distances
+
+Conditions (>, <, !=, bool)
+
+
+
+
+Customization
+stats (skills to temporary buff some type of stats)
+    speed, melee damage, range, projectile speed
+abilities
+    set of abilities chosen
+    tweaks to strenght/effectiveness
+    tweaks to cooldown/costs
+
+Targeting of abilities
+    unit
+    relative position
+        random offset
+        relative offset (to the left, in front of, behind)
+        relative to speed (some multiple of his speed vector)
+        
+Speed/mobility as very expensive.
+
+Discrete damage (1,2,3,4,5)
+
+
+visual indicators of own preferred range and resources
+
+-----------------------------------------------
+- original concept                               -
+-----------------------------------------------
+
+The idea of writing AI as a gameplay mechanic is one I think I've touched on
+
+FSM with N states (N increeasing as you level?)
+
+or if its just CPU AI, machine learn with inputs as distance to different enemies, cooldowns, hp, and decisions every 0.1s (use ability for each target, or move in each of 16/32 directions)
+
+either score states, or train based on player inputs
+    ex. players use flash to dodge malphite ult. high chance that training input malph ult -> flash away from where he was
+
+enemy uses ability  -> transition to state B
+you can go without using an ability to prevent a state transition (metagame)
+
+write a few strategies, can change strategies every so often (nax equilibrium?)
+    maybe alternate changing strategies
+    
+ possibly some amount of character customization, like itemization
+    - this would be visible in planning phase
+    
+Duels primarily, since multiagent strategies can be harder to describe.
+
+Could be Asyncronous PVP or occasional inputs / realtime.
+
+Could also be single player campaign of boss fights. boss fights become like a puzzle, what strategy works against this challenge.
+
+For a given state:
+    preferred distance, conditions for use of each ability (closer than X -> use Q, Q on cooldown and closer than Y, use E. not at preferred distance implies walking. enemy health > own health (or < 30%,) use R
+    
+    inputs: distance, constansts, healths, cooldowns, projectiles / delayed abilities)
+        (enemy cooldowns known)
+        
+    inputs can also trigger a transition (enemy used blink and is within X range, transition to "all in" state. enemy health is > 1.3 * own health -> run and poke"
+        try to avoid standoffs and counterpicks
+
+
+        
+        
+        Hearth/League replayability in learning to improvise, to salvage whatever scenario is thrown at you (matchup and current state) + a lot of customization and some collection
+        
+        Could also have "realtime" multiplayer,
+            giving mvoe commands and then run into an enemy (human or npc) and begin combat
+                can change strategies at periodic intervals (a change takes effect after a delay ~ 1s) so that you can't time a strat change as a dodge.
+                
+                a "run away" strat would allow you to end combat peacefully, return to fog of war / heal while out of combat.
+                
+                    then you can farm resources/money and buy parts + see cost/level of others and most logic is done serverside / no twitchy
+                    
+     possibly mobile watch the gameplay and only inputs to "move" or choose strategy.
+     
+     select a focal target. attempt to kite everything else while focusing the primary target (maximize distance to others while on the preferred dist circle)
+     
+     
+     
+     
+     
+     multi agent strategy becomes much more complicated, even just with skillshots / projectiles. "target p + target v * (function of distance and delay)
+     
+     
+     
+     
+     can abstract some concepts (leading skillshots, turning 90-270 around after projectile fired)
+     
+     stats asociated with strat (non-stacking buffs, ala rammus or sona) to clarify defensive, offensive, mobile.
+     
+     maybe even change weapon type (gun, bow, sword, flamethrower)
+     
+     
+     
+     projectile/aoe reaction seems really awkward.
+     
+     
+     --------------------
