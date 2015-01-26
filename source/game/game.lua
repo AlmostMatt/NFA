@@ -81,9 +81,8 @@ function gameUI()
     end
 end
 
-entities = {}
 function Game:load()
-    
+    InitEntities()
     KEYS = {JUMP=" ",DASH="x",LEFT="a",RIGHT="d",UP="w",DOWN="s",ATTACK="c"}
     DIRS = {UP=P(-sqrt2/2,sqrt2/2), LEFT=P(-sqrt2/2,-sqrt2/2), RIGHT=P(sqrt2/2,sqrt2/2), DOWN=P(sqrt2/2,-sqrt2/2)}
 
@@ -106,12 +105,10 @@ function Game:load()
     Game:update(1/30) --force an update before any draw function is possible.
     
     
-    for n = 0, 1 do
-        o = Unit:new{p=P(80 * n, 0)}
-        table.insert(entities, o)
-    end
-    entities[1].enemy = entities[2]
-    entities[1].strategy = {mind=100, maxd=150}
+    local p1 = Unit:add({p=P(80, 0)}, PLAYER1)
+    local p2 = Unit:add({p=P(160, 0)}, PLAYER2)
+    p1.enemy = p2
+    p1.strategy = {mind=100, maxd=150}
     -- entities[2].enemy = entities[1]
     -- entities[2].strategy = {mind=100, maxd=150}
 end

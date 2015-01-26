@@ -56,6 +56,9 @@ stats (skills to temporary buff some type of stats)
     speed, melee damage, range, projectile speed
 abilities
     set of abilities chosen
+        " choose 3 attacks + 1 mobility ability"
+            blink, dash, passive movespeed
+            missile, aoe, melee attack, flamethrower
     tweaks to strenght/effectiveness
     tweaks to cooldown/costs
 

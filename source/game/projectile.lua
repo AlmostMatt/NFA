@@ -43,6 +43,14 @@ function Skillshot:update(dt)
     self.dist = self.dist - self.speed * dt
     local p2 = self.p + Vmult(dt, self.v)
     self.p = p2
+    for _, u in ipairs(collisionlayer[self.collides]) do
+        -- assuming u is a unit
+        if Vdist(self.p, u.p) < self.r + u.r then
+            u.status:add(Damaged, 0.4)
+            self.destroyed = true
+            break
+        end
+    end
     if self.dist <= 0 then
         self.destroyed = true
     end

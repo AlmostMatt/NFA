@@ -6,7 +6,7 @@ function getZ(pos)
     return 0
 end
 
-WANDERSPEED = 60
+WANDERSPEED = 100
 WANDERDISTANCE = 150
 MAXSPEED = 100
 ACCEL = 800
@@ -17,14 +17,14 @@ WALKABLE = 17
 Type.Unit = Type.new()
 Unit = Entity:new{t=Type.Unit, z=20, vz=0, r=7, h=17,col={140,160,240},line={10,30,10}}
 --Unit = Object:new{z=20,r=7, h=17,t=UNIT,life=100}
-function Unit:new(o)
+function Unit:add(o, layer)
     o = o or {}
     o.actions = ActionMap:new(o)
     o.actions:add("shoot", Shoot:new())
     o.actions:add("shoot2", Shoot2:new())
     o.status = StatusMap:new(o)
 
-    return Entity.new(self, o)
+    return Entity.add(self, o, layer)
 end
 
 function Unit:update(dt)
